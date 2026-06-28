@@ -1,0 +1,430 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Crimson & Gold brand, applied in a clean Finto-style professional system */
+  --paper: #faf8f3;
+  --paper-2: #f2eee4;
+  --card: #ffffff;
+  --ink: #1e1b16;
+  --muted: #6e685e;
+  --line: #ece7db;
+  --line-2: #ded7c7;
+  --red: #7e1d1a;
+  --red-deep: #571210;
+  --red-soft: #a8362c;
+  --gold: #c7a24e;
+  --gold-light: #ddbe74;
+  --gold-deep: #9e7c30;
+  --cream: #f3e7c9;
+  --accent: #a8362c;
+  --accent-deep: #7e1d1a;
+  --accent-soft: #f3e6d2;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --r: 22px; /* card radius */
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+/* small mono labels (corner meta, render tags) */
+.mono {
+  font-family: 'SF Mono', 'SFMono-Regular', ui-monospace, 'Menlo', 'Consolas', monospace;
+  letter-spacing: 0.04em;
+}
+@media (pointer: fine) {
+  body.has-cursor * { cursor: none !important; }
+}
+a { color: inherit; text-decoration: none; }
+::selection { background: rgba(168, 54, 44, 0.18); color: var(--ink); }
+
+/* ---------- GRAIN (very subtle) ---------- */
+.grain::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9990;
+  pointer-events: none;
+  opacity: 0.35;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+}
+
+/* ---------- TYPE (Helvetica Neue) ---------- */
+.font-serif { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: 700; letter-spacing: -0.02em; }
+.font-hand { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-style: italic; font-weight: 500; }
+.script { font-family: 'Caveat', cursive; }
+.display {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  font-size: clamp(38px, 5.8vw, 78px);
+  line-height: 1.0;
+  letter-spacing: -0.035em;
+}
+.h2 {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  font-size: clamp(28px, 3.6vw, 46px);
+  line-height: 1.06;
+  letter-spacing: -0.03em;
+}
+.lead {
+  font-size: clamp(16px, 1.15vw, 18px);
+  line-height: 1.65;
+  color: var(--muted);
+  font-weight: 400;
+}
+/* heavy condensed display for bold festive graphic bands (poster vibe) */
+.festive-display {
+  font-family: 'Anton', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+  line-height: 0.92;
+  letter-spacing: 0.01em;
+  font-size: clamp(40px, 6vw, 86px);
+}
+
+/* ---------- EYEBROW = Finto pill badge ---------- */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--accent-deep);
+  background: var(--accent-soft);
+  border: 1px solid var(--line-2);
+  padding: 6px 14px 6px 12px;
+  border-radius: 999px;
+}
+.eyebrow::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold-deep);
+}
+.on-red .eyebrow {
+  color: var(--cream);
+  background: rgba(243, 231, 201, 0.1);
+  border-color: rgba(221, 190, 116, 0.4);
+}
+.on-red .eyebrow::before { background: var(--gold-light); }
+
+/* ---------- BUTTONS = pills, soft shadow ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13.5px;
+  font-weight: 600;
+  padding: 9px 16px;
+  border-radius: 999px;
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  transition: transform 0.3s var(--ease), background 0.25s, color 0.25s, box-shadow 0.3s, border-color 0.25s;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn .arr {
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+  font-size: 11px;
+}
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 12px 26px -12px rgba(168, 54, 44, 0.6);
+}
+.btn-primary:hover { background: var(--accent-deep); box-shadow: 0 16px 32px -12px rgba(168, 54, 44, 0.7); }
+.btn-ink { background: var(--ink); color: #fff; }
+.btn-ink:hover { background: #000; }
+.btn-accent { background: var(--gold); color: var(--red-deep); box-shadow: 0 12px 26px -14px rgba(199, 162, 78, 0.7); }
+.btn-accent:hover { background: var(--gold-light); }
+.btn-outline { border-color: var(--line-2); color: var(--ink); background: #fff; }
+.btn-outline:hover { border-color: var(--ink); }
+.on-red .btn-outline { background: transparent; border-color: rgba(221, 190, 116, 0.5); color: var(--cream); }
+.on-red .btn-outline:hover { background: var(--gold); color: var(--red-deep); border-color: var(--gold); }
+
+/* ---------- LAYOUT ---------- */
+.container-x { max-width: 1200px; margin: 0 auto; padding: 0 40px; position: relative; }
+@media (max-width: 640px) { .container-x { padding: 0 20px; } }
+
+/* ---------- CUSTOM CURSOR (red wax, gold T) ---------- */
+.cursor-dot, .cursor-ring {
+  position: fixed; top: 0; left: 0; z-index: 9999; pointer-events: none;
+  border-radius: 50%; transform: translate(-50%, -50%); will-change: transform;
+}
+.cursor-dot {
+  width: 28px; height: 28px;
+  background: radial-gradient(circle at 35% 30%, #9e2b22, var(--red-deep) 72%);
+  box-shadow: inset 0 2px 5px rgba(255, 235, 200, 0.25), inset 0 -2px 6px rgba(0, 0, 0, 0.5), 0 6px 14px -6px rgba(87, 18, 16, 0.8);
+  display: grid; place-items: center; color: var(--gold-light);
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 700;
+  transition: width 0.25s var(--ease), height 0.25s var(--ease);
+}
+.cursor-ring { width: 44px; height: 44px; border: 1.5px solid rgba(199, 162, 78, 0.5); }
+.cursor-hover .cursor-dot { width: 44px; height: 44px; }
+
+/* ---------- SCROLL HINT ---------- */
+.scroll-hint {
+  position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 60;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  color: var(--gold-deep); font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; pointer-events: none;
+}
+.scroll-hint .track { width: 22px; height: 34px; border: 1.5px solid var(--gold-deep); border-radius: 12px; position: relative; opacity: 0.8; }
+.scroll-hint .track::after {
+  content: ''; position: absolute; left: 50%; top: 6px; width: 4px; height: 7px; border-radius: 4px;
+  background: var(--gold-deep); transform: translateX(-50%); animation: wheel 1.5s var(--ease) infinite;
+}
+@keyframes wheel { 0% { opacity: 0; transform: translate(-50%, 0); } 40% { opacity: 1; } 100% { opacity: 0; transform: translate(-50%, 12px); } }
+.scroll-wheel { position: absolute; left: 50%; top: 6px; width: 4px; height: 7px; border-radius: 4px; background: var(--gold-deep); transform: translateX(-50%); animation: wheel 1.5s var(--ease) infinite; }
+
+/* ---------- HERO STRING RIBBON (gently swaying) ---------- */
+.hero-string path { animation: stringSway 9s ease-in-out infinite; transform-origin: center; }
+.hero-string path:nth-child(2) { animation-duration: 11s; animation-delay: -3s; }
+.hero-string .draw { stroke-dasharray: 1400; animation: stringDraw 5s var(--ease) forwards, stringSway 9s ease-in-out 5s infinite; }
+@keyframes stringSway {
+  0%, 100% { transform: translateY(0) }
+  33% { transform: translateY(-10px) }
+  66% { transform: translateY(8px) }
+}
+@keyframes stringDraw { from { stroke-dashoffset: 1400 } to { stroke-dashoffset: 0 } }
+
+/* ---------- POSTAGE-STAMP EDGE (perforated card) ---------- */
+/* Reliable scallop: section-coloured half-circle "bites" painted over the card
+   edges via a pseudo-element. --sb must match the section background. */
+.stamp-edge {
+  position: relative;
+  background: var(--card);
+  --sb: var(--paper-2);
+  --sc: 9px;
+}
+.stamp-edge::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle var(--sc) at var(--sc) 0, var(--sb) calc(var(--sc) - 0.5px), #0000 var(--sc)) repeat-x 0 0 / calc(2 * var(--sc)) var(--sc),
+    radial-gradient(circle var(--sc) at var(--sc) 100%, var(--sb) calc(var(--sc) - 0.5px), #0000 var(--sc)) repeat-x 0 100% / calc(2 * var(--sc)) var(--sc),
+    radial-gradient(circle var(--sc) at 0 var(--sc), var(--sb) calc(var(--sc) - 0.5px), #0000 var(--sc)) repeat-y 0 0 / var(--sc) calc(2 * var(--sc)),
+    radial-gradient(circle var(--sc) at 100% var(--sc), var(--sb) calc(var(--sc) - 0.5px), #0000 var(--sc)) repeat-y 100% 0 / var(--sc) calc(2 * var(--sc));
+}
+/* mini postage stampdashed perforation border */
+.stamp-mini {
+  background: #fbf5e8;
+  border: 2px dashed rgba(168, 54, 44, 0.5);
+  border-radius: 2px;
+}
+
+/* ---------- WAX SEAL ---------- */
+.wax {
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #9e2b22, var(--red-deep) 72%);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--gold-light); font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: 700;
+  box-shadow: inset 0 2px 6px rgba(255, 235, 200, 0.22), inset 0 -3px 8px rgba(0, 0, 0, 0.45), 0 8px 18px -8px rgba(87, 18, 16, 0.7);
+  position: relative;
+}
+.wax::before { content: ''; position: absolute; inset: 6px; border-radius: 50%; border: 1.5px dashed rgba(221, 190, 116, 0.5); }
+
+/* ---------- NAV ---------- */
+.nav-link { position: relative; transition: color 0.2s; font-weight: 500; }
+.nav-link::after {
+  content: ''; position: absolute; left: 0; bottom: -5px; width: 0; height: 2px; border-radius: 2px;
+  background: var(--accent); transition: width 0.3s var(--ease);
+}
+.nav-link:hover::after { width: 100%; }
+
+/* ---------- SOFT CARD + ICON CHIP ---------- */
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  box-shadow: 0 1px 2px rgba(30, 27, 22, 0.04), 0 22px 48px -30px rgba(30, 27, 22, 0.25);
+  transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
+}
+.card-hover:hover { transform: translateY(-5px); box-shadow: 0 1px 2px rgba(30, 27, 22, 0.04), 0 34px 60px -30px rgba(30, 27, 22, 0.32); }
+.icon-chip {
+  width: 52px; height: 52px; border-radius: 16px;
+  display: grid; place-items: center; font-size: 22px;
+  color: var(--accent-deep); background: var(--accent-soft);
+  border: 1px solid var(--line-2);
+}
+
+/* ---------- COLLECTION CARD (image top, text below) ---------- */
+.collection {
+  display: block; background: var(--card); border: 1px solid var(--line);
+  border-radius: var(--r); overflow: hidden;
+  box-shadow: 0 1px 2px rgba(30, 27, 22, 0.04), 0 22px 48px -30px rgba(30, 27, 22, 0.22);
+  transition: transform 0.45s var(--ease), box-shadow 0.45s var(--ease);
+}
+.collection:hover { transform: translateY(-5px); box-shadow: 0 34px 60px -28px rgba(30, 27, 22, 0.32); }
+.collection .photo { aspect-ratio: 4 / 5; background-size: cover; background-position: center; transition: transform 0.6s var(--ease); }
+.collection:hover .photo { transform: scale(1.05); }
+.collection .label { padding: 18px 20px 20px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.collection .label h4 { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 19px; font-weight: 700; letter-spacing: -0.015em; }
+.collection .label .go {
+  width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; flex: none;
+  background: var(--accent-soft); color: var(--accent-deep); font-size: 13px;
+  transition: 0.3s var(--ease);
+}
+.collection:hover .label .go { background: var(--accent); color: #fff; transform: rotate(-45deg); }
+
+/* ---------- FEATURE CARDS (why) ---------- */
+.feature-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.feature {
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--r); padding: 32px 30px;
+  display: flex; flex-direction: column; gap: 15px; min-height: 232px;
+  box-shadow: 0 1px 2px rgba(30, 27, 22, 0.04), 0 18px 40px -30px rgba(30, 27, 22, 0.2);
+  transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
+}
+.feature:hover { transform: translateY(-4px); box-shadow: 0 30px 56px -30px rgba(30, 27, 22, 0.28); }
+.feature h4 { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 19px; font-weight: 700; letter-spacing: -0.015em; }
+.feature p { font-size: 14.5px; color: var(--muted); line-height: 1.55; }
+@media (max-width: 1000px) { .feature-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .feature-grid { grid-template-columns: 1fr; } }
+
+/* ---------- MARQUEE ---------- */
+.marquee { overflow: hidden; padding: 8px 0; -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+.marquee-track { display: flex; gap: 56px; width: max-content; align-items: center; animation: scroll-x 36s linear infinite; }
+.marquee:hover .marquee-track { animation-play-state: paused; }
+.logo-chip { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 21px; font-weight: 700; letter-spacing: -0.01em; color: var(--muted); opacity: 0.55; white-space: nowrap; }
+.on-red .logo-chip { color: var(--cream); opacity: 0.5; }
+@keyframes scroll-x { to { transform: translateX(-50%); } }
+
+/* ---------- DIARY / FLIPBOOK ---------- */
+.diary-wrap { width: min(94vw, 1060px); display: flex; justify-content: center; }
+.diary-book { margin: 0 auto; }
+.diary-leaf { overflow: hidden; border-radius: 8px; width: 100%; height: 100%; }
+.leaf-bg { position: absolute; inset: 0; border-radius: 8px; z-index: 0; }
+.diary-stitch { position: absolute; inset: 12px; border: 1px solid rgba(199, 162, 78, 0.35); border-radius: 6px; overflow: hidden; z-index: 1; }
+.diary-leaf, .diary-stitch > * { height: 100%; }
+
+/* round icon buttons */
+.icon-round { width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--line-2); background: var(--card); display: grid; place-items: center; font-size: 17px; color: var(--ink); transition: 0.25s var(--ease); }
+.icon-round:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--paper-2); }
+::-webkit-scrollbar-thumb { background: var(--line-2); border-radius: 99px; border: 2px solid var(--paper-2); }
+::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+
+.reveal { opacity: 0; transform: translateY(28px); }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+  .reveal { opacity: 1; transform: none; }
+}
+
+/* ============ Vintage postcard (Enquiry / Contact) ============ */
+.pc-blackletter { font-family: 'UnifrakturCook', 'Times New Roman', serif; }
+.pc-type { font-family: 'Special Elite', 'Courier New', Courier, monospace; }
+
+/* deep crimson "tabletop" the postcard rests on */
+.pc-bg { background: radial-gradient(125% 95% at 50% 0%, #7e1d1a 0%, #5c1411 58%, #470f0d 100%); }
+
+/* aged-cream postcard paper */
+.pc-card {
+  position: relative;
+  background: radial-gradient(140% 120% at 28% 0%, #f7eed6 0%, #efe2c4 45%, #e6d4af 100%);
+  color: var(--accent-deep);
+  box-shadow: 0 55px 95px -42px rgba(0, 0, 0, 0.6), 0 10px 24px -12px rgba(0, 0, 0, 0.42);
+}
+.pc-card::before { /* faint foxing / aged stains */
+  content: ''; position: absolute; inset: 0; pointer-events: none; opacity: 0.55; border-radius: inherit;
+  background:
+    radial-gradient(55% 45% at 88% 92%, rgba(120, 60, 20, 0.10), transparent 60%),
+    radial-gradient(45% 38% at 8% 12%, rgba(120, 60, 20, 0.08), transparent 60%);
+}
+
+/* red double rule frame */
+.pc-frame { position: relative; border: 2.5px solid var(--accent); }
+.pc-frame::before { content: ''; position: absolute; inset: 6px; border: 1px solid var(--accent); pointer-events: none; }
+.pc-corner { position: absolute; width: 40px; height: 40px; color: var(--accent); pointer-events: none; }
+
+/* dotted "address line" inputs */
+.pc-input {
+  width: 100%; background: transparent; border: none;
+  border-bottom: 1.6px dotted rgba(168, 54, 44, 0.6);
+  padding: 3px 2px; color: var(--accent-deep);
+  font-family: 'Caveat', cursive; font-size: 25px; line-height: 1.15;
+  outline: none; transition: border-color 0.2s var(--ease);
+}
+.pc-input::placeholder { color: rgba(126, 29, 26, 0.34); }
+.pc-input:focus { border-bottom-color: var(--accent); border-bottom-style: solid; }
+textarea.pc-input { resize: none; border: 1.6px dotted rgba(168, 54, 44, 0.5); border-radius: 5px; padding: 8px 11px; font-size: 22px; }
+.pc-label { font-family: 'Special Elite', monospace; font-size: 10px; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); }
+
+/* perforated postage stamp */
+.pc-stamp {
+  background:
+    radial-gradient(circle at center, #fff 0 3px, transparent 3.5px) -4px -4px / 8px 8px,
+    #f4e9cf;
+  padding: 7px; border-radius: 2px;
+  filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.18));
+}
+
+/* ============ Envelope launch intro ============ */
+.env-intro {
+  position: fixed; inset: 0; z-index: 200; display: grid; place-items: center;
+  background: radial-gradient(115% 92% at 50% 8%, #faf4e6 0%, #f0e7d2 52%, #e3d6b8 100%);
+  perspective: 1600px; cursor: pointer; overflow: hidden;
+  transition: opacity 0.6s ease 0.75s, transform 0.9s ease 0.75s;
+}
+.env-intro::after { /* warm vignette so the paper falls into soft shadow at the edges */
+  content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 5;
+  background: radial-gradient(122% 108% at 50% 40%, transparent 50%, rgba(92, 58, 22, 0.18) 100%);
+}
+.env-intro.opening { opacity: 0; transform: scale(1.09); pointer-events: none; }
+
+.env-noise { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.05; mix-blend-mode: multiply; pointer-events: none; z-index: 1; }
+.env-creases { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; }
+
+.env-flap {
+  position: absolute; top: 0; left: 0; right: 0; height: 50%;
+  background: linear-gradient(177deg, #f8f0de 0%, #f1e7cf 64%, #e7dabb 100%);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  transform-origin: top center; transform: rotateX(0deg);
+  transition: transform 1.05s cubic-bezier(0.5, 0.02, 0.2, 1);
+  filter: drop-shadow(0 16px 22px rgba(108, 68, 28, 0.26));
+  z-index: 2;
+}
+.env-flap::before { /* soft key light across the top of the flap */
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(78% 66% at 50% -10%, rgba(255, 250, 236, 0.72), transparent 60%);
+}
+.env-flap::after { /* shadow gathering toward the folded point */
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 52%, rgba(108, 70, 30, 0.18) 100%);
+}
+.env-intro.opening .env-flap { transform: rotateX(-179deg); }
+
+.env-seal {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 4;
+  width: clamp(132px, 18vw, 188px);
+  transition: transform 0.6s cubic-bezier(0.5, 0.02, 0.2, 1), opacity 0.5s ease;
+}
+.env-seal svg { display: block; width: 100%; height: auto; }
+.env-intro.opening .env-seal { transform: translate(-50%, -92%) scale(1.14) rotate(-13deg); opacity: 0; }
+
+.env-brand { position: absolute; left: 0; right: 0; top: 11%; text-align: center; z-index: 3; padding: 0 24px; transition: opacity 0.4s ease, transform 0.5s ease; }
+.env-prompt { position: absolute; left: 0; right: 0; bottom: 11%; text-align: center; z-index: 3; transition: opacity 0.35s ease; }
+.env-intro.opening .env-brand { opacity: 0; transform: translateY(-14px); }
+.env-intro.opening .env-prompt { opacity: 0; }
+@keyframes envBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
+.env-bob { animation: envBob 1.9s ease-in-out infinite; }
